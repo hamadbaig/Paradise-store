@@ -1,0 +1,89 @@
+.Footer {
+  background-color: #f2f2f2;
+  width: 100%;
+  font-size: 18px;
+}
+.Footermain {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.Footermain div {
+  border: 2px solid white;
+}
+
+.signupcontainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 4rem !important;
+  width: 33%;
+  background-color: #f1f1f1;
+}
+
+.signuptitle {
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.signupform {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+}
+
+.inputcontainer {
+  display: flex;
+  align-items: center;
+  padding: 5px;
+}
+
+.icon {
+  padding: 10px;
+  background: #ddd;
+  border-right: 1px solid #ccc;
+}
+
+.emailinput {
+  border: none;
+  padding: 10px;
+  outline: none;
+}
+
+.submitbutton {
+  background-color: #ff6600;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+}
+
+.submitbutton:hover {
+  background-color: #e65c00;
+}
+.Footersecond {
+  display: flex;
+  justify-content: center;
+  padding: 5rem;
+  flex-wrap: wrap;
+}
+.Footersecond div {
+  /* width: 130px; */
+  width: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-right: 2px solid gray;
+  padding-right: 1rem;
+  margin: 1rem;
+}
+.Footersecond div:hover {
+  color: #ff6600;
+}
+@media (max-width: 1024px) {
+  .Footer {
+    display: none;
+  }
+}
