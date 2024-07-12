@@ -31,13 +31,13 @@
 .signupform {
   display: flex;
   align-items: center;
-  border: 1px solid #ccc;
 }
 
 .inputcontainer {
   display: flex;
   align-items: center;
-  padding: 5px;
+  border-bottom-left-radius: 10px;
+  border-top-left-radius: 10px;
 }
 
 .icon {
@@ -48,16 +48,19 @@
 
 .emailinput {
   border: none;
-  padding: 10px;
   outline: none;
+  height: 40px;
 }
 
 .submitbutton {
   background-color: #ff6600;
   color: white;
-  padding: 10px 20px;
+  padding: 10px 10px;
   border: none;
   cursor: pointer;
+  height: 40px;
+  border-bottom-right-radius: 10px;
+  border-top-right-radius: 10px;
 }
 
 .submitbutton:hover {

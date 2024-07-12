@@ -1,5 +1,4 @@
 "use client";
-import styles from "./page.module.css";
 import React, { Fragment } from "react";
 import Footer from "@/component/common/Footer";
 import Header from "@/component/common/Header";

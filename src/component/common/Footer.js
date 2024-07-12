@@ -1,4 +1,3 @@
-"use client";
 import React from "react";
 import styles from "./Footer.module.css";
 const Footer = () => {
@@ -12,9 +11,6 @@ const Footer = () => {
             </p>
             <form className={styles.signupform}>
               <div className={styles.inputcontainer}>
-                <i
-                  className={`${styles.fa} ${styles.faenvelope} ${styles.icon}`}
-                ></i>
                 <input
                   type="email"
                   placeholder="Email"
@@ -32,9 +28,9 @@ const Footer = () => {
             </p>
             <form className={styles.signupform}>
               <div className={styles.inputcontainer}>
-                <i
+                {/* <i
                   className={`${styles.fa} ${styles.faenvelope} ${styles.icon}`}
-                ></i>
+                ></i> */}
                 <input
                   type="email"
                   placeholder="Email"
@@ -52,9 +48,9 @@ const Footer = () => {
             </p>
             <form className={styles.signupform}>
               <div className={styles.inputcontainer}>
-                <i
+                {/* <i
                   className={`${styles.fa} ${styles.faenvelope} ${styles.icon}`}
-                ></i>
+                ></i> */}
                 <input
                   type="email"
                   placeholder="Email"

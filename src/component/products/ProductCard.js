@@ -4,7 +4,7 @@ const ProductCard = () => {
     <>
       <div className={styles.card}>
         <img src="/flower1.jpg" className={styles.logoimg} />
-        <h4>Pink Gypso Beauty Arrangement</h4>
+        <h3>Pink Gypso Beauty Arrangement</h3>
         <h3>AED 249</h3>
       </div>
     </>
