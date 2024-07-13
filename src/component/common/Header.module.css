@@ -115,11 +115,12 @@
     display: flex;
     justify-content: left;
     background-color: #ffffff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 8px rgba(0, 0, 0, 0.4);
     font-size: 2rem;
     gap: 4rem;
     padding: 1rem 2rem 1rem 2rem;
     overflow: scroll;
+    margin-bottom: 10px;
   }
   .headerbot::-webkit-scrollbar {
     display: none;
