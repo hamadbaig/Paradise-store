@@ -1,5 +1,5 @@
 :root {
-  --color-primary: #a04185;
+  --color-primary: #d884c2;
   --color-secondary: #ffffff;
 }
 
@@ -9,6 +9,6 @@ html {
 body {
   margin: 0;
   padding: 0;
-
+  color: black;
   font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
 }

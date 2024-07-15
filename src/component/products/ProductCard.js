@@ -1,11 +1,23 @@
 import styles from "./Home.module.css";
-const ProductCard = () => {
+import Link from "next/link";
+const ProductCard = ({ name, price, imageUrl }) => {
   return (
     <>
       <div className={styles.card}>
-        <img src="/flower1.jpg" className={styles.logoimg} />
-        <h3>Pink Gypso Beauty Arrangement</h3>
-        <h3>AED 249</h3>
+        <Link
+          className={styles.link}
+          href={{
+            pathname: `/product`,
+            query: { name, price, imageUrl },
+          }}
+          scroll={false}
+        >
+          <div className={styles.cardpic}>
+            <img src={imageUrl} className={styles.logoimg} />
+          </div>
+          <h3>{name}</h3>
+          <h3>{price}</h3>
+        </Link>
       </div>
     </>
   );

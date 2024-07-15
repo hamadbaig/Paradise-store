@@ -50,15 +50,22 @@
   width: 45%;
   height: 40%;
 }
-.card img {
+.cardpic {
   width: 100%;
   height: 80%;
 }
-
+.cardpic img {
+  width: 100%;
+  height: 100%;
+}
 .card h3 {
   font-size: 2rem;
   margin: 0.5rem;
   font-weight: 400;
+}
+.Link {
+  text-decoration: none;
+  color: black;
 }
 @media (min-width: 668px) {
   .card {

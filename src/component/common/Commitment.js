@@ -2,8 +2,34 @@ import React from "react";
 import ProductCard from "../products/ProductCard";
 import styles from "./Commitment.module.css";
 import { TiTick } from "react-icons/ti";
+import Link from "next/link";
 
 const Commitment = () => {
+  const products = [
+    {
+      name: "Pink Gypso Beauty Arrangement",
+      price: "AED 249",
+      imageUrl: "/flower1.jpg",
+    },
+
+    {
+      name: "Mixed Floral Basket",
+      price: "AED 319",
+      imageUrl: "/floral-basket.jpg",
+    },
+    {
+      name: "Pink Gypso Beauty Arrangement",
+      price: "AED 249",
+      imageUrl: "/flower1.jpg",
+    },
+
+    {
+      name: "Mixed Floral Basket",
+      price: "AED 319",
+      imageUrl: "/floral-basket.jpg",
+    },
+  ];
+
   return (
     <>
       <div className={styles.commit}>
@@ -45,10 +71,14 @@ const Commitment = () => {
           <div>View All</div>
         </div>
         <div className={styles.prod}>
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
+          {products.map((product, index) => (
+            <ProductCard
+              key={index}
+              name={product.name}
+              price={product.price}
+              imageUrl={product.imageUrl}
+            />
+          ))}
         </div>
       </div>
       <div className={styles.seller}>
@@ -64,10 +94,14 @@ const Commitment = () => {
           <div>View All</div>
         </div>
         <div className={styles.prod}>
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
+          {products.map((product, index) => (
+            <ProductCard
+              key={index}
+              name={product.name}
+              price={product.price}
+              imageUrl={product.imageUrl}
+            />
+          ))}
         </div>
       </div>
     </>

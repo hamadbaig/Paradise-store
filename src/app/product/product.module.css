@@ -1,0 +1,111 @@
+.main {
+  background-color: white;
+}
+.demoimg {
+  display: none;
+}
+.mainimg {
+  width: 100%;
+}
+.mainimg img {
+  width: 100%;
+}
+.nameprice {
+  padding: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.starreview {
+  display: flex;
+
+  gap: 1rem;
+}
+.star {
+  background-color: #7e2a66;
+  font-size: 2rem;
+  color: white;
+  border-radius: 4px;
+  padding: 0.2rem;
+}
+.review {
+  color: dodgerblue;
+  font-size: 1.5rem;
+}
+.review2 {
+  font-size: 2rem;
+}
+.review2 span {
+  font-size: 1.2rem;
+  margin-top: 0.5rem;
+}
+.form {
+  background-color: #f4f4f4;
+  padding: 1.5rem;
+}
+.label {
+  width: auto;
+  color: darkgray;
+  font-size: 2rem;
+  padding: 1rem;
+}
+.inputdiv {
+  margin-bottom: 2rem;
+}
+.tab {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  width: 100%;
+  position: fixed;
+  bottom: 0px;
+}
+.tab div {
+  text-align: center;
+  padding: 1rem;
+  font-size: 2rem;
+  font-weight: bolder;
+}
+.add {
+  background-color: #f4f4f4;
+  color: black;
+}
+.buy {
+  background-color: chocolate;
+  color: white;
+}
+.seller {
+  background-color: #ffff;
+  padding: 3rem;
+}
+.seller div h2 {
+  text-align: center;
+  font-size: 3rem;
+}
+.seller div p {
+  text-align: center;
+  font-size: 2rem;
+}
+.heading2 {
+  display: flex;
+  justify-content: space-between;
+}
+.heading2 h2 {
+  font-size: 3rem;
+  font-weight: bold;
+}
+.heading2 div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 90px;
+  height: 50px;
+  background-color: #7d8035;
+  font-size: 2rem;
+  color: white;
+  border-radius: 8%;
+}
+.prod {
+  display: flex;
+  overflow: scroll;
+  justify-content: space-between;
+}

@@ -47,7 +47,7 @@ const Header = () => {
       </div>
       <div className={styles.header}>
         <div className={styles.logo}>
-          <img src="/Paradiselogo2.jpg" className={styles.logoimg} />
+          <img src="/Paradiselogo2.png" className={styles.logoimg} />
         </div>
         {/* <div></div> */}
         <div className={styles.multitimes2}>
@@ -73,23 +73,23 @@ const Header = () => {
           </div>
         </div>
         <div className={styles.toggleicon}>
-          <div className={styles.times} onClick={handleToggle}>
+          <div className={styles.times}>
             {isContentVisible ? (
-              <FaTimes className={styles.icon} />
+              <FaTimes className={styles.icon} onClick={handleToggle} />
             ) : (
-              <FaBars className={styles.icon} />
+              <FaBars className={styles.icon} onClick={handleToggle} />
             )}
-          </div>
-          <div className={styles.multitimes}>
-            <FaTimes className={styles.icon} />
-            <IoIosCall className={styles.icon} />
-            <FaSearch className={styles.icon} />
-            <MdCardGiftcard className={styles.icon} />
-            <FaCartShopping className={styles.icon} />
-            <BsThreeDotsVertical
-              className={styles.icon}
-              onClick={handleToggle2}
-            />
+            <div className={styles.multitimes}>
+              <FaTimes className={styles.icon} />
+              <IoIosCall className={styles.icon} />
+              <FaSearch className={styles.icon} />
+              <MdCardGiftcard className={styles.icon} />
+              <FaCartShopping className={styles.icon} />
+              <BsThreeDotsVertical
+                className={styles.icon}
+                onClick={handleToggle2}
+              />
+            </div>
           </div>
         </div>
         {isContentVisible2 && (
