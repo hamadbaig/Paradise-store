@@ -16,7 +16,7 @@ const ProductCard = ({ name, price, imageUrl }) => {
             <img src={imageUrl} className={styles.logoimg} />
           </div>
           <h3>{name}</h3>
-          <h3>{price}</h3>
+          <h3 className={styles.price}>{price}</h3>
         </Link>
       </div>
     </>

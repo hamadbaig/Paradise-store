@@ -80,8 +80,8 @@ const Header = () => {
               <FaBars className={styles.icon} onClick={handleToggle} />
             )}
             <div className={styles.multitimes}>
-              <FaTimes className={styles.icon} />
-              <IoIosCall className={styles.icon} />
+              {/* <FaTimes className={styles.icon} /> */}
+              {/* <IoIosCall className={styles.icon} /> */}
               <FaSearch className={styles.icon} />
               <MdCardGiftcard className={styles.icon} />
               <FaCartShopping className={styles.icon} />

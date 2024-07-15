@@ -12,7 +12,7 @@
 }
 .nameprice {
   padding: 2rem;
-  display: flex;
+  display: block;
   justify-content: space-between;
   align-items: center;
 }
@@ -44,13 +44,14 @@
   padding: 1.5rem;
 }
 .label {
-  width: auto;
+  width: 100%;
   color: darkgray;
   font-size: 2rem;
   padding: 1rem;
 }
 .inputdiv {
   margin-bottom: 2rem;
+  width: 90%;
 }
 .tab {
   display: grid;
@@ -59,6 +60,10 @@
   position: fixed;
   bottom: 0px;
 }
+.tab2 {
+  display: none;
+}
+
 .tab div {
   text-align: center;
   padding: 1rem;
@@ -104,8 +109,115 @@
   color: white;
   border-radius: 8%;
 }
+.prodContainer {
+  height: 400px;
+  overflow-y: auto;
+}
 .prod {
   display: flex;
-  overflow: scroll;
   justify-content: space-between;
+  gap: 2rem;
+  width: max-content;
+}
+.description {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+}
+
+.description h2 {
+  font-size: 3rem;
+  margin-bottom: 2rem;
+}
+
+.productdetails,
+.deliveryinformation {
+  margin-top: 2rem;
+}
+
+.productdetails h3,
+.deliveryinformation h3 {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}
+
+.para {
+  list-style-type: disc;
+  padding-left: 2rem;
+}
+
+.para li {
+  margin-bottom: 1rem;
+}
+@media (min-width: 768px) {
+  .main {
+    display: flex;
+    justify-content: space-between;
+    padding: 2rem;
+  }
+  .mainimg {
+    width: 40%;
+  }
+  .nameprice {
+    width: 50%;
+    height: 100vh;
+    overflow: scroll;
+  }
+  .nameprice h2 {
+    font-size: 2rem;
+  }
+  .starview {
+    gap: 2rem;
+  }
+  .review2 {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
+  .review2 div {
+    font-size: 3.5rem;
+  }
+  .description {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+  }
+
+  .description h2 {
+    font-size: 3rem !important;
+    margin-bottom: 2rem;
+  }
+
+  .productdetails,
+  .deliveryinformation {
+    margin-top: 2rem;
+  }
+
+  .productdetails h3,
+  .deliveryinformation h3 {
+    font-size: 3rem !important;
+    margin-bottom: 2rem;
+  }
+
+  .para {
+    list-style-type: disc;
+    padding-left: 2rem;
+  }
+
+  .para li {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .tab {
+    display: none;
+  }
+  .tab2 {
+    display: block;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    width: 100%;
+  }
+  .tab2 div {
+    text-align: center;
+    padding: 1rem;
+    font-size: 2rem;
+    font-weight: bolder;
+  }
 }

@@ -33,18 +33,16 @@
 .heading2 {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
-.heading2 h2 {
-  font-size: 3rem;
-  font-weight: bold;
-}
+
 .heading2 div {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 90px;
   height: 50px;
-  background-color: #7d8035;
+  background-color: #7e2a66;
   font-size: 2rem;
   color: white;
   border-radius: 8%;
@@ -57,5 +55,19 @@
 @media (max-width: 1024px) {
   .commit {
     display: none;
+  }
+}
+@media (max-width: 786px) {
+  .seller div h2 {
+    text-align: center;
+    font-size: 2rem;
+  }
+  .heading2 div {
+    width: 70px;
+    height: 40px;
+    font-size: 1.5rem;
+  }
+  .seller div p {
+    font-size: 1.5rem;
   }
 }
