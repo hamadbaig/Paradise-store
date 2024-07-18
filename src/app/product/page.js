@@ -1,11 +1,17 @@
 "use client";
 import styles from "./product.module.css";
 import { IoMdStar } from "react-icons/io";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import ProductCard from "@/component/products/ProductCard";
+import AddOn from "@/component/common/AddOn";
+import { FaTimes } from "react-icons/fa";
+
 const product = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0); // Scroll to the top
+  }, []);
   const products = [
     {
       name: "Pink Gypso Beauty Arrangement",
@@ -30,17 +36,66 @@ const product = () => {
       imageUrl: "/floral-basket.jpg",
     },
   ];
+  const options = {
+    option1: ["07:00 - 09:00"],
+    option2: [
+      "08:00 - 13:00",
+      "12:00 - 17:00",
+      "14:00 - 19:00",
+      "16:00 - 21:00",
+      "19:00 - 23:00",
+    ],
+    option3: [
+      "08:00 - 13:00",
+      "12:00 - 17:00",
+      "14:00 - 19:00",
+      "16:00 - 21:00",
+      "19:00 - 23:00",
+    ],
+    option4: ["19:00 - 23:00"],
+  };
+  const [selectedCity, setSelectedCity] = useState("");
 
+  const [selectedTime, setSelectedTime] = useState("");
   const [selectedOption, setSelectedOption] = useState("");
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(null);
   const [message, setMessage] = useState("");
+  const [subOptions, setSubOptions] = useState([]);
+  const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
+  const [isAddOnOpen, setIsAddOnOpen] = useState(false);
 
+  const handleSelectCity = (e) => {
+    setSelectedCity(e.target.value);
+    setSelectedTime("");
+    setSelectedOption("");
+    setSelectedDate("");
+    setMessage("");
+    cls;
+  };
+  const handleSelectTime = (e) => {
+    setSelectedTime(e.target.value);
+  };
   const handleSelectChange = (e) => {
-    setSelectedOption(e.target.value);
+    const selected = e.target.value;
+    setSelectedOption(selected);
+    setSelectedTime(""); // Reset the sub-option when main option changes
+    setSubOptions(options[selected] || []);
+  };
+  const handleCart = (event) => {
+    event.preventDefault();
+    setIsAddOnOpen(true);
+  };
+  const closeCart = (event) => {
+    event.preventDefault();
+    setIsAddOnOpen(false);
+  };
+  const handleFocus = () => {
+    setIsDatePickerOpen(true);
   };
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
+    setIsDatePickerOpen(false);
   };
 
   const handleMessageChange = (e) => {
@@ -75,45 +130,99 @@ const product = () => {
             </div>
           </div>
           <form className={styles.form}>
-            <label className={styles.label} htmlFor="select">
-              Deliver to:
-            </label>
             <div className={styles.inputdiv}>
               <select
                 id="select"
-                value={selectedOption}
-                onChange={handleSelectChange}
+                value={selectedCity}
+                onChange={handleSelectCity}
                 className={styles.label}
               >
-                <option value="">choose an option</option>
+                <option value="">choose Country</option>
                 <option value="option1">Pakistan</option>
                 <option value="option2">Oman</option>
                 <option value="option3">America</option>
               </select>
             </div>
-            <label className={styles.label} htmlFor="date">
-              Select date:
-            </label>
+
             <div className={styles.inputdiv}>
               <DatePicker
                 id="date"
                 selected={selectedDate}
                 onChange={handleDateChange}
                 dateFormat="yyyy/MM/dd"
-                value="Select date to delevier"
                 className={styles.label}
+                minDate={new Date()} // Only allows present and future dates
+                showPopperArrow={true} // Optional: hide the popper arrow
+                placeholderText="Select a date"
+                disabled={!selectedCity}
+                onFocus={handleFocus}
+                // onBlur={handleBlur}
+                popperClassName={styles.customDatePickerPopper}
               />
+              {isDatePickerOpen && (
+                <div className={styles.datePickerOverlay}>
+                  <DatePicker
+                    id="popupDate"
+                    selected={selectedDate}
+                    onChange={handleDateChange}
+                    dateFormat="yyyy/MM/dd"
+                    inline
+                    className={styles.popupDatePicker}
+                    minDate={new Date()} // Only allows present and future dates
+                  />
+                </div>
+              )}
             </div>
-            <label className={styles.label} htmlFor="message">
-              Message:
-            </label>
+            <div className={styles.inputdiv}>
+              <select
+                id="select"
+                value={selectedOption}
+                onChange={handleSelectChange}
+                className={styles.label}
+                disabled={!selectedDate}
+              >
+                <option value="">select </option>
+                <option value="option1">Morning Delivery</option>
+                <option value="option2">Standard Delivery</option>
+                <option value="option3">Fixed Time Deliver</option>
+                <option value="option4">Midnight Delivery</option>
+              </select>
+            </div>
+            <div className={styles.inputdiv}>
+              <select
+                id="select"
+                value={selectedTime}
+                onChange={handleSelectTime}
+                className={styles.label}
+                disabled={!selectedOption}
+              >
+                <option value="">Select time</option>
+                {subOptions.map((time, index) => (
+                  <option key={index} value={time}>
+                    {time}
+                  </option>
+                ))}
+              </select>
+            </div>
             <div className={styles.inputdiv}>
               <textarea
                 id="message"
-                value="Enter Message"
+                placeholder="Enter Message"
                 onChange={handleMessageChange}
                 className={styles.label}
+                disabled={!selectedTime}
               />
+            </div>
+            <div className={styles.tab2}>
+              <div>
+                <button className={styles.add} onClick={handleCart}>
+                  {" "}
+                  Add to cart
+                </button>
+              </div>
+              <div>
+                <button className={styles.buy}>Buy Now</button>
+              </div>
             </div>
           </form>
           <div class="description">
@@ -164,10 +273,6 @@ const product = () => {
                 <li>Enjoy your cake!</li>
               </ul>
             </div>
-            <div className={styles.tab2}>
-              <div className={styles.add}>Add To Cart</div>
-              <div className={styles.buy}>Buy Now</div>
-            </div>
           </div>
         </div>
       </div>
@@ -193,6 +298,14 @@ const product = () => {
         <div className={styles.add}>Add To Cart</div>
         <div className={styles.buy}>Buy Now</div>
       </div>
+      {isAddOnOpen && (
+        <section className={styles.AddOn}>
+          <div className={styles.divIcon} onClick={closeCart}>
+            <FaTimes className={styles.icon} />
+          </div>
+          <AddOn />
+        </section>
+      )}
     </>
   );
 };

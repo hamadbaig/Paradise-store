@@ -44,10 +44,13 @@
   padding: 1.5rem;
 }
 .label {
-  width: 100%;
+  /* width: 100%;
   color: darkgray;
   font-size: 2rem;
-  padding: 1rem;
+  padding: 1rem; */
+  width: 200px;
+  padding: 10px;
+  font-size: 16px;
 }
 .inputdiv {
   margin-bottom: 2rem;
@@ -71,7 +74,7 @@
   font-weight: bolder;
 }
 .add {
-  background-color: #f4f4f4;
+  background-color: #7e2a66;
   color: black;
 }
 .buy {
@@ -148,19 +151,31 @@
 .para li {
   margin-bottom: 1rem;
 }
+.AddOn {
+  position: fixed;
+  z-index: 1000;
+  width: 80%;
+  height: 100vh;
+  left: 10%;
+  top: 0%;
+  background-color: #ffff;
+}
 @media (min-width: 768px) {
   .main {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     padding: 2rem;
   }
   .mainimg {
     width: 40%;
   }
   .nameprice {
-    width: 50%;
+    width: 40%;
     height: 100vh;
     overflow: scroll;
+  }
+  .nameprice::-webkit-scrollbar {
+    display: none;
   }
   .nameprice h2 {
     font-size: 2rem;
@@ -213,11 +228,54 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     width: 100%;
+    gap: 1rem;
   }
   .tab2 div {
     text-align: center;
     padding: 1rem;
     font-size: 2rem;
     font-weight: bolder;
+    border-radius: 10px;
+  }
+  .form {
+    display: flex;
+    justify-content: space-between;
+
+    flex-wrap: wrap;
+  }
+  .inputdiv {
+    margin-bottom: 2rem;
+    width: 45%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+  .inputdiv {
+    position: relative;
+  }
+
+  .customDatePickerPopper {
+    display: none;
+  }
+
+  .datePickerOverlay {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    background-color: white;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 400px;
+    height: 400px;
+  }
+
+  .popupDatePicker {
+    width: 400px !important;
+    height: 400px !important;
   }
 }
