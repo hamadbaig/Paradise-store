@@ -7,18 +7,18 @@ import "react-datepicker/dist/react-datepicker.css";
 import ProductCard from "@/component/products/ProductCard";
 import AddOn from "@/component/common/AddOn";
 import { FaTimes } from "react-icons/fa";
-
-const product = () => {
+import Link from "next/link";
+const Product = () => {
   useEffect(() => {
     window.scrollTo(0, 0); // Scroll to the top
   }, []);
+
   const products = [
     {
       name: "Pink Gypso Beauty Arrangement",
       price: "AED 249",
       imageUrl: "/flower1.jpg",
     },
-
     {
       name: "Mixed Floral Basket",
       price: "AED 319",
@@ -29,13 +29,13 @@ const product = () => {
       price: "AED 249",
       imageUrl: "/flower1.jpg",
     },
-
     {
       name: "Mixed Floral Basket",
       price: "AED 319",
       imageUrl: "/floral-basket.jpg",
     },
   ];
+
   const options = {
     option1: ["07:00 - 09:00"],
     option2: [
@@ -54,8 +54,8 @@ const product = () => {
     ],
     option4: ["19:00 - 23:00"],
   };
-  const [selectedCity, setSelectedCity] = useState("");
 
+  const [selectedCity, setSelectedCity] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
   const [selectedOption, setSelectedOption] = useState("");
   const [selectedDate, setSelectedDate] = useState(null);
@@ -64,31 +64,38 @@ const product = () => {
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
   const [isAddOnOpen, setIsAddOnOpen] = useState(false);
 
+  const handleContinueWithoutAddOn = () => {
+    router.push("/");
+  };
   const handleSelectCity = (e) => {
     setSelectedCity(e.target.value);
     setSelectedTime("");
     setSelectedOption("");
     setSelectedDate("");
     setMessage("");
-    cls;
   };
+
   const handleSelectTime = (e) => {
     setSelectedTime(e.target.value);
   };
+
   const handleSelectChange = (e) => {
     const selected = e.target.value;
     setSelectedOption(selected);
     setSelectedTime(""); // Reset the sub-option when main option changes
     setSubOptions(options[selected] || []);
   };
+
   const handleCart = (event) => {
     event.preventDefault();
     setIsAddOnOpen(true);
   };
+
   const closeCart = (event) => {
     event.preventDefault();
     setIsAddOnOpen(false);
   };
+
   const handleFocus = () => {
     setIsDatePickerOpen(true);
   };
@@ -106,7 +113,7 @@ const product = () => {
     <>
       <div className={styles.main}>
         <div className={styles.mainimg}>
-          <img src="/flower1.jpg"></img>
+          <img src="/flower1.jpg" alt="Main Product" />
         </div>
         <div className={styles.nameprice}>
           <h2>Roses and Cake</h2>
@@ -143,7 +150,6 @@ const product = () => {
                 <option value="option3">America</option>
               </select>
             </div>
-
             <div className={styles.inputdiv}>
               <DatePicker
                 id="date"
@@ -213,21 +219,20 @@ const product = () => {
                 disabled={!selectedTime}
               />
             </div>
+            disabled={!selectedTime}
             <div className={styles.tab2}>
-              <div>
-                <button className={styles.add} onClick={handleCart}>
-                  {" "}
-                  Add to cart
-                </button>
+              <div className={styles.add} onClick={handleCart}>
+                {" "}
+                Add to cart
               </div>
-              <div>
-                <button className={styles.buy}>Buy Now</button>
-              </div>
+              <Link className={styles.link} href="/cart" scroll={false}>
+                <div className={styles.buy}>Buy Now</div>
+              </Link>
             </div>
           </form>
-          <div class="description">
+          <div className="description">
             <h2>Description</h2>
-            <div class="productdetails">
+            <div className="productdetails">
               <h3>Product Details</h3>
               <ul className={styles.para}>
                 <li>3 Red rose</li>
@@ -239,7 +244,7 @@ const product = () => {
                 <li>Portions: 4</li>
               </ul>
             </div>
-            <div class="deliveryinformation">
+            <div className="deliveryinformation">
               <h3>Delivery Information</h3>
               <ul className={styles.para}>
                 <li>
@@ -257,7 +262,7 @@ const product = () => {
                 </li>
               </ul>
             </div>
-            <div class="deliveryinformation">
+            <div className="deliveryinformation">
               <h3>Care Instructor</h3>
               <ul className={styles.para}>
                 <li>Upon receiving the cake, refrigerate it immediately.</li>
@@ -295,19 +300,37 @@ const product = () => {
         </div>
       </div>
       <div className={styles.tab}>
-        <div className={styles.add}>Add To Cart</div>
-        <div className={styles.buy}>Buy Now</div>
+        <div className={styles.add} onClick={handleCart}>
+          Add To Cart
+        </div>
+        <Link className={styles.link} href="/cart" scroll={false}>
+          <div className={styles.buy}>Buy Now</div>
+        </Link>
       </div>
       {isAddOnOpen && (
-        <section className={styles.AddOn}>
-          <div className={styles.divIcon} onClick={closeCart}>
-            <FaTimes className={styles.icon} />
-          </div>
-          <AddOn />
-        </section>
+        <>
+          <div className={styles.backdrop} />
+          <section className={styles.AddOn}>
+            <div className={styles.top}>
+              <h2>Add on something to make it extra special</h2>
+              <FaTimes className={styles.icon} onClick={closeCart} />
+            </div>
+
+            <AddOn />
+            <div className={styles.bottom}>
+              <h2>Bottom</h2>
+              <Link className={styles.link} href="/" scroll={false}>
+                <button className={styles.button2}>
+                  {" "}
+                  Continue Without Add On
+                </button>
+              </Link>
+            </div>
+          </section>
+        </>
       )}
     </>
   );
 };
 
-export default product;
+export default Product;

@@ -73,6 +73,9 @@
   font-size: 2rem;
   font-weight: bolder;
 }
+.AddToCart {
+  width: 50%;
+}
 .add {
   background-color: #7e2a66;
   color: black;
@@ -152,15 +155,80 @@
   margin-bottom: 1rem;
 }
 .AddOn {
+  width: 70%;
+  height: 80%; /* Adjusted to enable scroll */
   position: fixed;
-  z-index: 1000;
-  width: 80%;
-  height: 100vh;
+  z-index: 1000; /* Ensure it is above the backdrop */
+  top: 10%;
   left: 10%;
-  top: 0%;
-  background-color: #ffff;
+  background-color: #fff;
+  overflow-y: auto; /* Enable vertical scrolling */
+  border-radius: 10px;
+  padding: 2rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8); /* Semi-transparent black */
+  z-index: 999; /* Ensure it is on top */
+}
+.divIcon {
+  cursor: pointer;
+}
+
+.divIcon .icon {
+  font-size: 3rem;
+}
+.btnDiv {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f6f6f6;
+
+  font-size: 2rem;
+  padding: 1rem;
+  text-align: center;
+}
+.button {
+  border: 1px solid lightgray;
+  padding: 1rem;
+  font-size: 3rem;
+  background-color: #fff;
+}
+.button2 {
+  background-color: chocolate;
+  color: white;
+  font-size: 2rem;
+  padding: 1rem;
+  border-radius: 10px;
+}
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f6f6f6;
+  font-size: 2rem;
+  text-align: center;
+  padding: 1rem;
+  font-weight: 600;
+}
+.link {
+  text-decoration: none;
+  color: black;
 }
 @media (min-width: 768px) {
+  .AddOn {
+    left: 15% !important;
+  }
   .main {
     display: flex;
     justify-content: space-around;
