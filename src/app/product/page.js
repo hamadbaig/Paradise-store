@@ -18,24 +18,95 @@ const Product = () => {
       name: "Pink Gypso Beauty Arrangement",
       price: "AED 249",
       imageUrl: "/flower1.jpg",
+      imageUrl2: "/floral-basket.jpg",
+      imageUrl3: "/red-roses.jpg",
     },
+
     {
       name: "Mixed Floral Basket",
       price: "AED 319",
       imageUrl: "/floral-basket.jpg",
+      imageUrl2:"/red-roses.jpg",
+      imageUrl3: "/flower1.jpg",
     },
     {
       name: "Pink Gypso Beauty Arrangement",
       price: "AED 249",
       imageUrl: "/flower1.jpg",
+      imageUrl2: "/floral-basket.jpg",
+      imageUrl3: "/red-roses.jpg",
     },
+
     {
       name: "Mixed Floral Basket",
       price: "AED 319",
       imageUrl: "/floral-basket.jpg",
+      imageUrl2: "/red-roses.jpg",
+      imageUrl3: "/flower1.jpg",
+    },
+    {
+      name: "Pink Gypso Beauty Arrangement",
+      price: "AED 249",
+      imageUrl: "/flower1.jpg",
+      imageUrl2: "/floral-basket.jpg",
+      imageUrl3: "/red-roses.jpg",
+    },
+
+    {
+      name: "Mixed Floral Basket",
+      price: "AED 319",
+      imageUrl: "/floral-basket.jpg",
+      imageUrl2: "/red-roses.jpg",
+      imageUrl3: "/flower1.jpg",
+    },
+    {
+      name: "Pink Gypso Beauty Arrangement",
+      price: "AED 249",
+      imageUrl: "/flower1.jpg",
+      imageUrl2: "/floral-basket.jpg",
+      imageUrl3: "/red-roses.jpg",
+    },
+
+    {
+      name: "Mixed Floral Basket",
+      price: "AED 319",
+      imageUrl: "/floral-basket.jpg",
+      imageUrl2: "/red-roses.jpg",
+      imageUrl3: "/flower1.jpg",
+    },
+    {
+      name: "Pink Gypso Beauty Arrangement",
+      price: "AED 249",
+      imageUrl: "/flower1.jpg",
+      imageUrl2: "/floral-basket.jpg",
+      imageUrl3: "/red-roses.jpg",
+    },
+
+    {
+      name: "Mixed Floral Basket",
+      price: "AED 319",
+      imageUrl: "/floral-basket.jpg",
+      imageUrl2:"/red-roses.jpg",
+      imageUrl3: "/flower1.jpg",
+    },
+    {
+      name: "Pink Gypso Beauty Arrangement",
+      price: "AED 249",
+      imageUrl: "/flower1.jpg",
+      imageUrl2: "/floral-basket.jpg",
+      imageUrl3: "/red-roses.jpg",
+
+
+    },
+
+    {
+      name: "Mixed Floral Basket",
+      price: "AED 319",
+      imageUrl: "/floral-basket.jpg",
+      imageUrl2: "/red-roses.jpg",
+      imageUrl3: "/flower1.jpg",
     },
   ];
-
   const options = {
     option1: ["07:00 - 09:00"],
     option2: [
@@ -63,10 +134,12 @@ const Product = () => {
   const [subOptions, setSubOptions] = useState([]);
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
   const [isAddOnOpen, setIsAddOnOpen] = useState(false);
+  const [mainImage, setMainImage] = useState('/flower1.jpg');
 
-  const handleContinueWithoutAddOn = () => {
-    router.push("/");
+  const handleImageClick = (newImage) => {
+    setMainImage(newImage);
   };
+  
   const handleSelectCity = (e) => {
     setSelectedCity(e.target.value);
     setSelectedTime("");
@@ -108,12 +181,18 @@ const Product = () => {
   const handleMessageChange = (e) => {
     setMessage(e.target.value);
   };
-
+ 
   return (
     <>
       <div className={styles.main}>
+        <div className={styles.sliderImage}>
+         <div onClick={() => handleImageClick('/flower1.jpg')}><img src= "/flower1.jpg"/></div> 
+          <div onClick={() => handleImageClick('/floral-basket.jpg')}><img src="/floral-basket.jpg"/></div>
+         <div onClick={() => handleImageClick('/red-roses.jpg')}><img src="/red-roses.jpg"/></div> 
+
+        </div>
         <div className={styles.mainimg}>
-          <img src="/flower1.jpg" alt="Main Product" />
+          <img src={mainImage} alt="Main Product" />
         </div>
         <div className={styles.nameprice}>
           <h2>Roses and Cake</h2>
@@ -294,6 +373,8 @@ const Product = () => {
                 name={product.name}
                 price={product.price}
                 imageUrl={product.imageUrl}
+                imageUrl2={product.imageUrl2}
+                imageUrl3={product.imageUrl3}
               />
             ))}
           </div>

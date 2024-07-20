@@ -1,6 +1,6 @@
 import styles from "./Home.module.css";
 import Link from "next/link";
-const ProductCard = ({ name, price, imageUrl }) => {
+const ProductCard = ({ name, price, imageUrl,imageUrl2, imageUrl3 }) => {
   return (
     <>
       <div className={styles.card}>
