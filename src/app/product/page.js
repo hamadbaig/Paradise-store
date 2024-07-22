@@ -139,7 +139,8 @@ const Product = () => {
   const handleImageClick = (newImage) => {
     setMainImage(newImage);
   };
-  
+  const isDisabled = !selectedTime;
+
   const handleSelectCity = (e) => {
     setSelectedCity(e.target.value);
     setSelectedTime("");
@@ -298,16 +299,33 @@ const Product = () => {
                 disabled={!selectedTime}
               />
             </div>
-            disabled={!selectedTime}
-            <div className={styles.tab2}>
-              <div className={styles.add} onClick={handleCart}>
+            
+            {/* <div className={styles.tab2} >
+            <div className={styles.add}  onClick={handleCart} >
                 {" "}
                 Add to cart
               </div>
               <Link className={styles.link} href="/cart" scroll={false}>
                 <div className={styles.buy}>Buy Now</div>
               </Link>
-            </div>
+            </div> */}
+             <div className={styles.tab2}>
+      <div 
+        className={`${styles.add} ${isDisabled ? styles.disabled : ''}`} 
+        onClick={isDisabled ? null : handleCart}
+        style={isDisabled ? { pointerEvents: 'none' } : {}}
+      >
+        Add to cart
+      </div>
+      <Link 
+        className={`${styles.link} ${isDisabled ? styles.disabled : ''}`} 
+        href={isDisabled ? '#' : '/cart'} 
+        scroll={false}
+        style={isDisabled ? { pointerEvents: 'none' } : {}}
+      >
+        <div className={styles.buy}>Buy Now</div>
+      </Link>
+    </div>
           </form>
           <div className="description">
             <h2>Description</h2>
