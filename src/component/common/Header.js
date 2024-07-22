@@ -9,6 +9,7 @@ import { MdCardGiftcard } from "react-icons/md";
 import { IoIosCall, IoMdContact, IoMdHelpCircleOutline } from "react-icons/io";
 import { MdOutlineCorporateFare } from "react-icons/md";
 import { RiArrowDropDownLine } from "react-icons/ri";
+import Link from 'next/link';
 
 import Image from "next/image";
 import styles from "./Header.module.css";
@@ -32,6 +33,18 @@ const Header = () => {
   const handleToggle2 = () => {
     setIsContentVisible2(!isContentVisible2);
   };
+  const menuItems = [
+    'Anniversary',
+    'Birthday',
+    'Flowers',
+    'Cake',
+    'Personalised',
+    'Hamper',
+    'More Gift',
+    'Brands',
+    'Occasion',
+    'Global'
+  ];
   return (
     <>
       <div className={styles.topbaar}>
@@ -159,7 +172,7 @@ const Header = () => {
         )}
       </div>
       <div className={styles.headerbot}>
-        <div>
+        {/* <div>
           Anniversery{" "}
           <span>
             <RiArrowDropDownLine />
@@ -218,7 +231,19 @@ const Header = () => {
           <span>
             <RiArrowDropDownLine />
           </span>
-        </div>
+        </div> */}
+         {menuItems.map((item) => (
+        // <Link key={item} href={`/singleCategory?category=${item}`} passHref className={styles.Link}>
+        <Link key={item} href={`/singleCategory`} passHref className={styles.Link}>
+
+          <div>
+            {item}{" "}
+            <span>
+              <RiArrowDropDownLine />
+            </span>
+          </div>
+        </Link>
+      ))}
       </div>
     </>
   );
