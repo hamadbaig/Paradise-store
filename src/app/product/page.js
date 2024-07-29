@@ -8,11 +8,26 @@ import ProductCard from "@/component/products/ProductCard";
 import AddOn from "@/component/common/AddOn";
 import { FaTimes } from "react-icons/fa";
 import Link from "next/link";
+import { useDispatch } from "react-redux";
+import { addToCart } from "@/reduxToolKit/slice";
+import { format } from 'date-fns';
+import { useRouter } from 'next/router';
+
 const Product = () => {
   useEffect(() => {
     window.scrollTo(0, 0); // Scroll to the top
   }, []);
-
+ 
+  const selectedProduct = [
+    {
+      // imageUrl:imageUrl,
+      name: "Pink Gypso Beauty Arrangement",
+      price: "AED 249",
+      imageUrl: "/flower1.jpg",
+      imageUrl2: "/floral-basket.jpg",
+      imageUrl3: "/red-roses.jpg",
+    },
+  ]
   const products = [
     {
       name: "Pink Gypso Beauty Arrangement",
@@ -108,22 +123,22 @@ const Product = () => {
     },
   ];
   const options = {
-    option1: ["07:00 - 09:00"],
-    option2: [
+    Morning: ["07:00 - 09:00"],
+    FixTime: [
       "08:00 - 13:00",
       "12:00 - 17:00",
       "14:00 - 19:00",
       "16:00 - 21:00",
       "19:00 - 23:00",
     ],
-    option3: [
+    Standard: [
       "08:00 - 13:00",
       "12:00 - 17:00",
       "14:00 - 19:00",
       "16:00 - 21:00",
       "19:00 - 23:00",
     ],
-    option4: ["19:00 - 23:00"],
+    LateNight: ["19:00 - 23:00"],
   };
 
   const [selectedCity, setSelectedCity] = useState("");
@@ -135,7 +150,20 @@ const Product = () => {
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
   const [isAddOnOpen, setIsAddOnOpen] = useState(false);
   const [mainImage, setMainImage] = useState('/flower1.jpg');
-
+ const  dispatch =useDispatch();
+ const CartDispatch = ()=>{
+  const cartItems = {
+    
+   
+    city: selectedCity,
+    date: selectedDate,
+    time: selectedTime,
+    method: selectedOption,
+    message: message,
+  };
+  console.log(cartItems);
+  dispatch(addToCart(cartItems));
+ }
   const handleImageClick = (newImage) => {
     setMainImage(newImage);
   };
@@ -174,22 +202,29 @@ const Product = () => {
     setIsDatePickerOpen(true);
   };
 
+  // const handleDateChange = (date) => {
+  //   setSelectedDate(date);
+  //   setIsDatePickerOpen(false);
+  // };
   const handleDateChange = (date) => {
-    setSelectedDate(date);
+    const formattedDate = format(date, 'yyyy-MM-dd');
+    setSelectedDate(formattedDate);
     setIsDatePickerOpen(false);
   };
-
   const handleMessageChange = (e) => {
     setMessage(e.target.value);
   };
- 
+  const handleClick = (e) => {
+    e.preventDefault();
+    CartDispatch();  
+  };
   return (
     <>
       <div className={styles.main}>
         <div className={styles.sliderImage}>
-         <div onClick={() => handleImageClick('/flower1.jpg')}><img src= "/flower1.jpg"/></div> 
-          <div onClick={() => handleImageClick('/floral-basket.jpg')}><img src="/floral-basket.jpg"/></div>
-         <div onClick={() => handleImageClick('/red-roses.jpg')}><img src="/red-roses.jpg"/></div> 
+         <div onClick={() => handleImageClick('/flower1.jpg')}><img src= '/flower1.jpg'/></div> 
+          <div onClick={() => handleImageClick('/floral-basket.jpg')}><img src='/floral-basket.jpg'/></div>
+         <div onClick={() => handleImageClick('/red-roses.jpg')}><img src='/red-roses.jpg'/></div> 
 
         </div>
         <div className={styles.mainimg}>
@@ -211,7 +246,8 @@ const Product = () => {
               <span> </span>
               <div className={styles.review2}>
                 <div>
-                  <span>AED</span>179
+                {selectedProduct[0].price}
+                  {/* <span>AED</span> */}
                 </div>
               </div>
             </div>
@@ -225,9 +261,9 @@ const Product = () => {
                 className={styles.label}
               >
                 <option value="">choose Country</option>
-                <option value="option1">Pakistan</option>
-                <option value="option2">Oman</option>
-                <option value="option3">America</option>
+                <option value="Pakistan">Pakistan</option>
+                <option value="Oman">Oman</option>
+                <option value="America">America</option>
               </select>
             </div>
             <div className={styles.inputdiv}>
@@ -267,11 +303,13 @@ const Product = () => {
                 className={styles.label}
                 disabled={!selectedDate}
               >
-                <option value="">select </option>
-                <option value="option1">Morning Delivery</option>
-                <option value="option2">Standard Delivery</option>
-                <option value="option3">Fixed Time Deliver</option>
-                <option value="option4">Midnight Delivery</option>
+                <option value="">select Method
+
+                </option>
+                <option value="Morning">Morning Delivery</option>
+                <option value="FixTime">Standard Delivery</option>
+                <option value="Standard">Fixed Time Deliver</option>
+                <option value="LateNight">Midnight Delivery</option>
               </select>
             </div>
             <div className={styles.inputdiv}>
@@ -314,6 +352,7 @@ const Product = () => {
         className={`${styles.add} ${isDisabled ? styles.disabled : ''}`} 
         onClick={isDisabled ? null : handleCart}
         style={isDisabled ? { pointerEvents: 'none' } : {}}
+        
       >
         Add to cart
       </div>
@@ -419,7 +458,7 @@ const Product = () => {
             <div className={styles.bottom}>
               <h2>Bottom</h2>
               <Link className={styles.link} href="/" scroll={false}>
-                <button className={styles.button2}>
+                <button className={styles.button2} onClick={handleClick}>
                   {" "}
                   Continue Without Add On
                 </button>

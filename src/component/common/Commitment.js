@@ -1,104 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ProductCard from "../products/ProductCard";
 import styles from "./Commitment.module.css";
 import { TiTick } from "react-icons/ti";
 import Link from "next/link";
+import { useDispatch, useSelector } from "react-redux";
+import { productApi } from "@/reduxToolKit/slice";
 
 const Commitment = () => {
-  const products = [
-    {
-      name: "Pink Gypso Beauty Arrangement",
-      price: "AED 249",
-      imageUrl: "/flower1.jpg",
-      imageUrl2: "/floral-basket.jpg",
-      imageUrl3: "/red-roses.jpg",
-    },
+  const dispatch =useDispatch();
 
-    {
-      name: "Mixed Floral Basket",
-      price: "AED 319",
-      imageUrl: "/floral-basket.jpg",
-      imageUrl2:"/red-roses.jpg",
-      imageUrl3: "/flower1.jpg",
-    },
-    {
-      name: "Pink Gypso Beauty Arrangement",
-      price: "AED 249",
-      imageUrl: "/flower1.jpg",
-      imageUrl2: "/floral-basket.jpg",
-      imageUrl3: "/red-roses.jpg",
-    },
+  useEffect(() => {
+    dispatch(productApi());
+  }, []);
+  const product =useSelector ((state) =>state.productApiData);
+  const isLoading =useSelector ((state) =>state.isLoading);
 
-    {
-      name: "Mixed Floral Basket",
-      price: "AED 319",
-      imageUrl: "/floral-basket.jpg",
-      imageUrl2: "/red-roses.jpg",
-      imageUrl3: "/flower1.jpg",
-    },
-    {
-      name: "Pink Gypso Beauty Arrangement",
-      price: "AED 249",
-      imageUrl: "/flower1.jpg",
-      imageUrl2: "/floral-basket.jpg",
-      imageUrl3: "/red-roses.jpg",
-    },
+  const error =useSelector ((state) =>state.error);
 
-    {
-      name: "Mixed Floral Basket",
-      price: "AED 319",
-      imageUrl: "/floral-basket.jpg",
-      imageUrl2: "/red-roses.jpg",
-      imageUrl3: "/flower1.jpg",
-    },
-    {
-      name: "Pink Gypso Beauty Arrangement",
-      price: "AED 249",
-      imageUrl: "/flower1.jpg",
-      imageUrl2: "/floral-basket.jpg",
-      imageUrl3: "/red-roses.jpg",
-    },
-
-    {
-      name: "Mixed Floral Basket",
-      price: "AED 319",
-      imageUrl: "/floral-basket.jpg",
-      imageUrl2: "/red-roses.jpg",
-      imageUrl3: "/flower1.jpg",
-    },
-    {
-      name: "Pink Gypso Beauty Arrangement",
-      price: "AED 249",
-      imageUrl: "/flower1.jpg",
-      imageUrl2: "/floral-basket.jpg",
-      imageUrl3: "/red-roses.jpg",
-    },
-
-    {
-      name: "Mixed Floral Basket",
-      price: "AED 319",
-      imageUrl: "/floral-basket.jpg",
-      imageUrl2:"/red-roses.jpg",
-      imageUrl3: "/flower1.jpg",
-    },
-    {
-      name: "Pink Gypso Beauty Arrangement",
-      price: "AED 249",
-      imageUrl: "/flower1.jpg",
-      imageUrl2: "/floral-basket.jpg",
-      imageUrl3: "/red-roses.jpg",
-
-
-    },
-
-    {
-      name: "Mixed Floral Basket",
-      price: "AED 319",
-      imageUrl: "/floral-basket.jpg",
-      imageUrl2: "/red-roses.jpg",
-      imageUrl3: "/flower1.jpg",
-    },
-  ];
+ console.log(product, 'hammad');
+ 
 
   return (
     <>
@@ -141,14 +61,14 @@ const Commitment = () => {
           <div>View All</div>
         </div>
         <div className={styles.prod}>
-          {products.map((product, index) => (
+          {product.map((product, index) => (
            <ProductCard
            key={index}
            name={product.name}
            price={product.price}
            imageUrl={product.imageUrl}
-           imageUrl2={product.imageUrl2}
-           imageUrl3={product.imageUrl3}
+           imageUrl2={product.imageUrl1}
+           imageUrl3={product.imageUrl2}
          />
           ))}
         </div>
@@ -166,7 +86,7 @@ const Commitment = () => {
           <div>View All</div>
         </div>
         <div className={styles.prod}>
-          {products.map((product, index) => (
+          {product.map((product, index) => (
             <ProductCard
               key={index}
               name={product.name}

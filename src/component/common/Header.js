@@ -13,8 +13,21 @@ import Link from 'next/link';
 
 import Image from "next/image";
 import styles from "./Header.module.css";
+import { useDispatch, useSelector } from "react-redux";
+import { CategoryApi } from "@/reduxToolKit/slice";
 
 const Header = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(CategoryApi());
+  }, []);
+  const Categories = useSelector ((state) =>state.categoryApiData);
+  const isLoading =useSelector ((state) =>state.isLoading);
+
+  const error =useSelector ((state) =>state.error);
+
+ console.log(Categories, 'Categoryhammad');
   const controls = useAnimation();
   const [ref, inView] = useInView();
 
@@ -149,95 +162,45 @@ const Header = () => {
               </div>
             </div>
             <div className={styles.drawer}>
-              <a className={styles.options} href="/">
-                HOME
-              </a>
+          
+                  
+                  {menuItems.map((item) => (
+                // <Link key={item} href={`/singleCategory?category=${item}`} passHref className={styles.Link}>
+                <Link key={item} href={`/singleCategory`} passHref className={styles.Link}>
+
+                  <div className={styles.drawer}>
+                    {item}{" "}
+                    <span>
+                      <RiArrowDropDownLine />
+                    </span>
+                  </div>
+                </Link>
+              ))}
+     
             </div>
-            <div className={styles.drawer}>
-              <a className={styles.options} href="/Aboutus">
-                ABOUT
-              </a>
-            </div>
-            <div className={styles.drawer}>
-              <a className={styles.options} href="/Work">
-                WORK
-              </a>
-            </div>
-            <div className={styles.drawer}>
-              <a className={styles.options} href="/Contact">
-                CONTACT
-              </a>
-            </div>
+            
+            
           </div>
         )}
       </div>
       <div className={styles.headerbot}>
-        {/* <div>
-          Anniversery{" "}
-          <span>
-            <RiArrowDropDownLine />
-          </span>
-        </div>
-        <div>
-          Birthday{" "}
-          <span>
-            <RiArrowDropDownLine />
-          </span>
-        </div>
-        <div>
-          Flowers
-          <span>
-            <RiArrowDropDownLine />
-          </span>
-        </div>
-        <div>
-          Cake
-          <span>
-            <RiArrowDropDownLine />
-          </span>
-        </div>
-        <div>
-          Personalised
-          <span>
-            <RiArrowDropDownLine />
-          </span>
-        </div>
-        <div>
-          Hamper
-          <span>
-            <RiArrowDropDownLine />
-          </span>
-        </div>
-        <div>
-          More Gift
-          <span>
-            <RiArrowDropDownLine />
-          </span>
-        </div>
-        <div>
-          Brands
-          <span>
-            <RiArrowDropDownLine />
-          </span>
-        </div>
-        <div>
-          Ocassion
-          <span>
-            <RiArrowDropDownLine />
-          </span>
-        </div>
-        <div>
-          Global
-          <span>
-            <RiArrowDropDownLine />
-          </span>
-        </div> */}
-         {menuItems.map((item) => (
+        
+         {/* {menuItems.map((item) => (
         // <Link key={item} href={`/singleCategory?category=${item}`} passHref className={styles.Link}>
         <Link key={item} href={`/singleCategory`} passHref className={styles.Link}>
 
           <div>
             {item}{" "}
+            <span>
+              <RiArrowDropDownLine />
+            </span>
+          </div>
+        </Link>
+      ))} */}
+       {Categories.map((category) => (
+        <Link key={category._id} href={`/singleCategory`} passHref className={styles.Link}>
+          <div>
+            {category.name}
             <span>
               <RiArrowDropDownLine />
             </span>

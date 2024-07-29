@@ -230,6 +230,26 @@
 }
 
 @media (min-width: 768px) {
+  .main {
+    display: flex;
+    align-items: flex-start;
+  }
+  
+  .sliderImage {
+    display: flex;
+    flex-direction: column;
+    margin-right: 20px;
+  }
+  
+  .sliderImage div {
+    margin-bottom: 10px;
+    cursor: pointer;
+  }
+  
+  .mainimg {
+    position: relative;
+  }
+  
   .AddOn {
     left: 15% !important;
   }
