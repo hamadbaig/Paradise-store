@@ -8,120 +8,17 @@ import ProductCard from "@/component/products/ProductCard";
 import AddOn from "@/component/common/AddOn";
 import { FaTimes } from "react-icons/fa";
 import Link from "next/link";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "@/reduxToolKit/slice";
-import { format } from 'date-fns';
-import { useRouter } from 'next/router';
-
+import { format } from "date-fns";
+import ReactImageMagnify from "react-image-magnify";
+import { productApi } from "@/reduxToolKit/slice";
+import { useRouter, useSearchParams } from "next/navigation";
 const Product = () => {
   useEffect(() => {
     window.scrollTo(0, 0); // Scroll to the top
   }, []);
- 
-  const selectedProduct = [
-    {
-      // imageUrl:imageUrl,
-      name: "Pink Gypso Beauty Arrangement",
-      price: "AED 249",
-      imageUrl: "/flower1.jpg",
-      imageUrl2: "/floral-basket.jpg",
-      imageUrl3: "/red-roses.jpg",
-    },
-  ]
-  const products = [
-    {
-      name: "Pink Gypso Beauty Arrangement",
-      price: "AED 249",
-      imageUrl: "/flower1.jpg",
-      imageUrl2: "/floral-basket.jpg",
-      imageUrl3: "/red-roses.jpg",
-    },
 
-    {
-      name: "Mixed Floral Basket",
-      price: "AED 319",
-      imageUrl: "/floral-basket.jpg",
-      imageUrl2:"/red-roses.jpg",
-      imageUrl3: "/flower1.jpg",
-    },
-    {
-      name: "Pink Gypso Beauty Arrangement",
-      price: "AED 249",
-      imageUrl: "/flower1.jpg",
-      imageUrl2: "/floral-basket.jpg",
-      imageUrl3: "/red-roses.jpg",
-    },
-
-    {
-      name: "Mixed Floral Basket",
-      price: "AED 319",
-      imageUrl: "/floral-basket.jpg",
-      imageUrl2: "/red-roses.jpg",
-      imageUrl3: "/flower1.jpg",
-    },
-    {
-      name: "Pink Gypso Beauty Arrangement",
-      price: "AED 249",
-      imageUrl: "/flower1.jpg",
-      imageUrl2: "/floral-basket.jpg",
-      imageUrl3: "/red-roses.jpg",
-    },
-
-    {
-      name: "Mixed Floral Basket",
-      price: "AED 319",
-      imageUrl: "/floral-basket.jpg",
-      imageUrl2: "/red-roses.jpg",
-      imageUrl3: "/flower1.jpg",
-    },
-    {
-      name: "Pink Gypso Beauty Arrangement",
-      price: "AED 249",
-      imageUrl: "/flower1.jpg",
-      imageUrl2: "/floral-basket.jpg",
-      imageUrl3: "/red-roses.jpg",
-    },
-
-    {
-      name: "Mixed Floral Basket",
-      price: "AED 319",
-      imageUrl: "/floral-basket.jpg",
-      imageUrl2: "/red-roses.jpg",
-      imageUrl3: "/flower1.jpg",
-    },
-    {
-      name: "Pink Gypso Beauty Arrangement",
-      price: "AED 249",
-      imageUrl: "/flower1.jpg",
-      imageUrl2: "/floral-basket.jpg",
-      imageUrl3: "/red-roses.jpg",
-    },
-
-    {
-      name: "Mixed Floral Basket",
-      price: "AED 319",
-      imageUrl: "/floral-basket.jpg",
-      imageUrl2:"/red-roses.jpg",
-      imageUrl3: "/flower1.jpg",
-    },
-    {
-      name: "Pink Gypso Beauty Arrangement",
-      price: "AED 249",
-      imageUrl: "/flower1.jpg",
-      imageUrl2: "/floral-basket.jpg",
-      imageUrl3: "/red-roses.jpg",
-
-
-    },
-
-    {
-      name: "Mixed Floral Basket",
-      price: "AED 319",
-      imageUrl: "/floral-basket.jpg",
-      imageUrl2: "/red-roses.jpg",
-      imageUrl3: "/flower1.jpg",
-    },
-  ];
   const options = {
     Morning: ["07:00 - 09:00"],
     FixTime: [
@@ -140,6 +37,9 @@ const Product = () => {
     ],
     LateNight: ["19:00 - 23:00"],
   };
+  const dispatch = useDispatch();
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
   const [selectedCity, setSelectedCity] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
@@ -149,21 +49,82 @@ const Product = () => {
   const [subOptions, setSubOptions] = useState([]);
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
   const [isAddOnOpen, setIsAddOnOpen] = useState(false);
-  const [mainImage, setMainImage] = useState('/flower1.jpg');
- const  dispatch =useDispatch();
- const CartDispatch = ()=>{
-  const cartItems = {
-    
-   
-    city: selectedCity,
-    date: selectedDate,
-    time: selectedTime,
-    method: selectedOption,
-    message: message,
+  const [mainImage, setMainImage] = useState("");
+  const product = useSelector((state) => state.productApiData);
+  const [IDproducts, setIDProducts] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  let ID = searchParams.get("id");
+
+  const handleProductClick = (product) => {
+    router.push(`/product?id=${encodeURIComponent(product._id)}`);
+    // window.location.reload();
+    // ID = product._id;
   };
-  console.log(cartItems);
-  dispatch(addToCart(cartItems));
- }
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      if (ID) {
+        try {
+          const response = await fetch("http://localhost:8000/getProductById", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ productId: ID }),
+          });
+
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+
+          const data = await response.json();
+          if (data.success) {
+            setIDProducts(data.product);
+            setMainImage(data.product.imageUrl);
+            console.log("data fetched :", IDproducts);
+          } else {
+            console.error(data.message); // Handle the case where fetching was not successful
+          }
+        } catch (error) {
+          console.error("Error fetching product:", error);
+          setError(error.message);
+        } finally {
+          setLoading(false);
+        }
+      } else {
+        setError("No product ID provided");
+        setLoading(false);
+      }
+    };
+
+    fetchProduct();
+  }, [ID]);
+
+  useEffect(() => {
+    dispatch(productApi());
+  }, []);
+
+  if (!IDproducts) {
+    return <div>No product selected</div>;
+  }
+
+  const CartDispatch = () => {
+    const cartItems = {
+      name: IDproducts.name,
+      price: IDproducts.price,
+      imageUrl: IDproducts.imageUrl,
+      imageUrl1: IDproducts.imageUrl1,
+      imageUrl2: IDproducts.imageUrl2,
+      city: selectedCity,
+      date: selectedDate,
+      time: selectedTime,
+      method: selectedOption,
+      message: message,
+    };
+    console.log(cartItems);
+    dispatch(addToCart(cartItems));
+  };
   const handleImageClick = (newImage) => {
     setMainImage(newImage);
   };
@@ -202,12 +163,8 @@ const Product = () => {
     setIsDatePickerOpen(true);
   };
 
-  // const handleDateChange = (date) => {
-  //   setSelectedDate(date);
-  //   setIsDatePickerOpen(false);
-  // };
   const handleDateChange = (date) => {
-    const formattedDate = format(date, 'yyyy-MM-dd');
+    const formattedDate = format(date, "yyyy-MM-dd");
     setSelectedDate(formattedDate);
     setIsDatePickerOpen(false);
   };
@@ -216,22 +173,46 @@ const Product = () => {
   };
   const handleClick = (e) => {
     e.preventDefault();
-    CartDispatch();  
+    CartDispatch();
+    router.push("/");
   };
+
   return (
     <>
       <div className={styles.main}>
         <div className={styles.sliderImage}>
-         <div onClick={() => handleImageClick('/flower1.jpg')}><img src= '/flower1.jpg'/></div> 
-          <div onClick={() => handleImageClick('/floral-basket.jpg')}><img src='/floral-basket.jpg'/></div>
-         <div onClick={() => handleImageClick('/red-roses.jpg')}><img src='/red-roses.jpg'/></div> 
-
+          <div onClick={() => handleImageClick(IDproducts.imageUrl)}>
+            <img src={IDproducts.imageUrl} alt={IDproducts.name} />
+          </div>
+          <div onClick={() => handleImageClick(IDproducts.imageUrl1)}>
+            <img src={IDproducts.imageUrl1} alt={IDproducts.name} />
+          </div>
+          <div onClick={() => handleImageClick(IDproducts.imageUrl2)}>
+            <img src={IDproducts.imageUrl2} alt={IDproducts.name} />
+          </div>
         </div>
         <div className={styles.mainimg}>
-          <img src={mainImage} alt="Main Product" />
+          <ReactImageMagnify
+            {...{
+              smallImage: {
+                alt: "Main Product",
+                isFluidWidth: true,
+                src: mainImage,
+              },
+              largeImage: {
+                src: mainImage,
+                width: 900,
+                height: 1000,
+              },
+              enlargedImageContainerDimensions: {
+                width: "200%",
+                height: "100%",
+              },
+            }}
+          />
         </div>
         <div className={styles.nameprice}>
-          <h2>Roses and Cake</h2>
+          <h2>{IDproducts.name}</h2>
           <div>
             <div className={styles.starreview}>
               <div className={styles.star}>
@@ -243,12 +224,8 @@ const Product = () => {
               <div className={styles.review}>36 reviews</div>
             </div>
             <div className={styles.starreview}>
-              <span> </span>
               <div className={styles.review2}>
-                <div>
-                {selectedProduct[0].price}
-                  {/* <span>AED</span> */}
-                </div>
+                <div>{IDproducts.price}</div>
               </div>
             </div>
           </div>
@@ -303,9 +280,7 @@ const Product = () => {
                 className={styles.label}
                 disabled={!selectedDate}
               >
-                <option value="">select Method
-
-                </option>
+                <option value="">select Method</option>
                 <option value="Morning">Morning Delivery</option>
                 <option value="FixTime">Standard Delivery</option>
                 <option value="Standard">Fixed Time Deliver</option>
@@ -337,34 +312,26 @@ const Product = () => {
                 disabled={!selectedTime}
               />
             </div>
-            
-            {/* <div className={styles.tab2} >
-            <div className={styles.add}  onClick={handleCart} >
-                {" "}
+
+            <div className={styles.tab2}>
+              <div
+                className={`${styles.add} ${isDisabled ? styles.disabled : ""}`}
+                onClick={isDisabled ? null : handleCart}
+                style={isDisabled ? { pointerEvents: "none" } : {}}
+              >
                 Add to cart
               </div>
-              <Link className={styles.link} href="/cart" scroll={false}>
+              <Link
+                className={`${styles.link} ${
+                  isDisabled ? styles.disabled : ""
+                }`}
+                href={isDisabled ? "#" : "/cart"}
+                scroll={false}
+                style={isDisabled ? { pointerEvents: "none" } : {}}
+              >
                 <div className={styles.buy}>Buy Now</div>
               </Link>
-            </div> */}
-             <div className={styles.tab2}>
-      <div 
-        className={`${styles.add} ${isDisabled ? styles.disabled : ''}`} 
-        onClick={isDisabled ? null : handleCart}
-        style={isDisabled ? { pointerEvents: 'none' } : {}}
-        
-      >
-        Add to cart
-      </div>
-      <Link 
-        className={`${styles.link} ${isDisabled ? styles.disabled : ''}`} 
-        href={isDisabled ? '#' : '/cart'} 
-        scroll={false}
-        style={isDisabled ? { pointerEvents: 'none' } : {}}
-      >
-        <div className={styles.buy}>Buy Now</div>
-      </Link>
-    </div>
+            </div>
           </form>
           <div className="description">
             <h2>Description</h2>
@@ -424,14 +391,13 @@ const Product = () => {
         </div>
         <div className={styles.prodContainer}>
           <div className={styles.prod}>
-            {products.map((product, index) => (
+            {product.map((product, index) => (
               <ProductCard
                 key={index}
                 name={product.name}
                 price={product.price}
                 imageUrl={product.imageUrl}
-                imageUrl2={product.imageUrl2}
-                imageUrl3={product.imageUrl3}
+                onClick={() => handleProductClick(product)}
               />
             ))}
           </div>
@@ -457,12 +423,12 @@ const Product = () => {
             <AddOn />
             <div className={styles.bottom}>
               <h2>Bottom</h2>
-              <Link className={styles.link} href="/" scroll={false}>
-                <button className={styles.button2} onClick={handleClick}>
+              <a className={styles.link} scroll={false} onClick={handleClick}>
+                <button className={styles.button2}>
                   {" "}
                   Continue Without Add On
                 </button>
-              </Link>
+              </a>
             </div>
           </section>
         </>

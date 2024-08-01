@@ -9,7 +9,7 @@ import { MdCardGiftcard } from "react-icons/md";
 import { IoIosCall, IoMdContact, IoMdHelpCircleOutline } from "react-icons/io";
 import { MdOutlineCorporateFare } from "react-icons/md";
 import { RiArrowDropDownLine } from "react-icons/ri";
-import Link from 'next/link';
+import Link from "next/link";
 
 import Image from "next/image";
 import styles from "./Header.module.css";
@@ -22,12 +22,11 @@ const Header = () => {
   useEffect(() => {
     dispatch(CategoryApi());
   }, []);
-  const Categories = useSelector ((state) =>state.categoryApiData);
-  const isLoading =useSelector ((state) =>state.isLoading);
+  const Categories = useSelector((state) => state.categoryApiData);
+  const isLoading = useSelector((state) => state.isLoading);
 
-  const error =useSelector ((state) =>state.error);
+  const error = useSelector((state) => state.error);
 
- console.log(Categories, 'Categoryhammad');
   const controls = useAnimation();
   const [ref, inView] = useInView();
 
@@ -47,16 +46,16 @@ const Header = () => {
     setIsContentVisible2(!isContentVisible2);
   };
   const menuItems = [
-    'Anniversary',
-    'Birthday',
-    'Flowers',
-    'Cake',
-    'Personalised',
-    'Hamper',
-    'More Gift',
-    'Brands',
-    'Occasion',
-    'Global'
+    "Anniversary",
+    "Birthday",
+    "Flowers",
+    "Cake",
+    "Personalised",
+    "Hamper",
+    "More Gift",
+    "Brands",
+    "Occasion",
+    "Global",
   ];
   return (
     <>
@@ -162,12 +161,14 @@ const Header = () => {
               </div>
             </div>
             <div className={styles.drawer}>
-          
-                  
-                  {menuItems.map((item) => (
+              {menuItems.map((item) => (
                 // <Link key={item} href={`/singleCategory?category=${item}`} passHref className={styles.Link}>
-                <Link key={item} href={`/singleCategory`} passHref className={styles.Link}>
-
+                <Link
+                  key={item}
+                  href={`/singleCategory`}
+                  passHref
+                  className={styles.Link}
+                >
                   <div className={styles.drawer}>
                     {item}{" "}
                     <span>
@@ -176,16 +177,12 @@ const Header = () => {
                   </div>
                 </Link>
               ))}
-     
             </div>
-            
-            
           </div>
         )}
       </div>
       <div className={styles.headerbot}>
-        
-         {/* {menuItems.map((item) => (
+        {/* {menuItems.map((item) => (
         // <Link key={item} href={`/singleCategory?category=${item}`} passHref className={styles.Link}>
         <Link key={item} href={`/singleCategory`} passHref className={styles.Link}>
 
@@ -197,16 +194,21 @@ const Header = () => {
           </div>
         </Link>
       ))} */}
-       {Categories.map((category) => (
-        <Link key={category._id} href={`/singleCategory`} passHref className={styles.Link}>
-          <div>
-            {category.name}
-            <span>
-              <RiArrowDropDownLine />
-            </span>
-          </div>
-        </Link>
-      ))}
+        {Categories.map((category) => (
+          <Link
+            key={category._id}
+            href={`/singleCategory`}
+            passHref
+            className={styles.Link}
+          >
+            <div>
+              {category.name}
+              <span>
+                <RiArrowDropDownLine />
+              </span>
+            </div>
+          </Link>
+        ))}
       </div>
     </>
   );

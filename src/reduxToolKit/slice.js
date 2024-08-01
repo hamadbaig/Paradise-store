@@ -1,4 +1,3 @@
-
 import { createSlice, nanoid, createAsyncThunk } from "@reduxjs/toolkit";
 
 const initialState = {
@@ -6,7 +5,7 @@ const initialState = {
   isLoading: false,
   error: null,
   productApiData: [],
-  categoryApiData:[],
+  categoryApiData: [],
 };
 
 export const productApi = createAsyncThunk("productApi", async () => {
@@ -20,14 +19,18 @@ export const CategoryApi = createAsyncThunk("CategoryApi", async () => {
   return data.categories; // Return products array directly
 });
 const Slice = createSlice({
-  name: 'cart',
+  name: "cart",
   initialState,
   reducers: {
     addToCart: (state, action) => {
       console.log(action.payload, "hammad");
-
       const data = {
-        Id: nanoid(),
+        // Id: nanoid(),
+        name: action.payload.name,
+        price: action.payload.price,
+        imageUrl: action.payload.imageUrl,
+        imageUrl1: action.payload.imageUrl1,
+        imageUrl2: action.payload.imageUrl2,
         city: action.payload.city,
         date: action.payload.date,
         time: action.payload.time,
@@ -36,7 +39,7 @@ const Slice = createSlice({
       };
 
       state.cart.push(data);
-      console.log(state.cart[0], "updated cart");
+      console.log(state.cart[0], "hammadcart");
     },
   },
   extraReducers: (builder) => {
@@ -65,7 +68,6 @@ const Slice = createSlice({
         state.isLoading = false;
         state.error = action.error.message;
       });
-  
   },
 });
 

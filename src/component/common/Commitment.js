@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect } from "react";
 import ProductCard from "../products/ProductCard";
 import styles from "./Commitment.module.css";
@@ -5,21 +6,25 @@ import { TiTick } from "react-icons/ti";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { productApi } from "@/reduxToolKit/slice";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const Commitment = () => {
-  const dispatch =useDispatch();
+  const router = useRouter();
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(productApi());
   }, []);
-  const product =useSelector ((state) =>state.productApiData);
-  const isLoading =useSelector ((state) =>state.isLoading);
 
-  const error =useSelector ((state) =>state.error);
+  const product = useSelector((state) => state.productApiData);
+  const isLoading = useSelector((state) => state.isLoading);
 
- console.log(product, 'hammad');
- 
+  const error = useSelector((state) => state.error);
 
+  const handleProductClick = (product) => {
+    router.push(`/product?id=${encodeURIComponent(product._id)}`);
+  };
   return (
     <>
       <div className={styles.commit}>
@@ -62,14 +67,15 @@ const Commitment = () => {
         </div>
         <div className={styles.prod}>
           {product.map((product, index) => (
-           <ProductCard
-           key={index}
-           name={product.name}
-           price={product.price}
-           imageUrl={product.imageUrl}
-           imageUrl2={product.imageUrl1}
-           imageUrl3={product.imageUrl2}
-         />
+            <ProductCard
+              key={index}
+              name={product.name}
+              price={product.price}
+              imageUrl={product.imageUrl}
+              imageUrl2={product.imageUrl1}
+              imageUrl3={product.imageUrl2}
+              onClick={() => handleProductClick(product)}
+            />
           ))}
         </div>
       </div>
@@ -92,6 +98,7 @@ const Commitment = () => {
               name={product.name}
               price={product.price}
               imageUrl={product.imageUrl}
+              onClick={() => handleProductClick(product)}
             />
           ))}
         </div>
