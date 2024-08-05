@@ -3,16 +3,24 @@ import React, { useState, useEffect } from 'react';
 import ProductCard from './products/ProductCard';
 import styles from './ProductMid.module.css';
 
-const ProductMid = ({ find }) => {
+const ProductCategory = ({ find }) => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch(`http://localhost:8000/search?query=${find}`);
+        const response = await fetch('http://localhost:8000/getProductsByCategories', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ categoryId: [find] }), // Assuming find is a single category ID
+        });
+
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
+
         const data = await response.json();
         setProducts(data.products);
       } catch (error) {
@@ -85,4 +93,4 @@ const ProductMid = ({ find }) => {
   );
 };
 
-export default ProductMid;
+export default ProductCategory;

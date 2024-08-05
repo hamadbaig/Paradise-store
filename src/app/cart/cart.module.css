@@ -47,6 +47,11 @@
   height: max-content;
 align-self:self-end;
 }
+.change:hover{
+color: white;
+background-color: #7e2a66;
+}
+
 .formContainer {
   max-width: 500px;
   margin: 0 auto;
@@ -104,6 +109,9 @@ align-self:self-end;
   border-radius: 4px;
   cursor: pointer;
   margin-top: 10px;
+}
+.delete:hover{
+  color: red;
 }
 @media (min-width: 668px) {
   .CartMain2{

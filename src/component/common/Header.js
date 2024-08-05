@@ -10,21 +10,22 @@ import { IoIosCall, IoMdContact, IoMdHelpCircleOutline } from "react-icons/io";
 import { MdOutlineCorporateFare } from "react-icons/md";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import Link from "next/link";
-
 import Image from "next/image";
 import styles from "./Header.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { CategoryApi } from "@/reduxToolKit/slice";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const Header = () => {
   const dispatch = useDispatch();
+  const router = useRouter();
 
   useEffect(() => {
     dispatch(CategoryApi());
-  }, []);
+  }, [dispatch]);
+
   const Categories = useSelector((state) => state.categoryApiData);
   const isLoading = useSelector((state) => state.isLoading);
-
   const error = useSelector((state) => state.error);
 
   const controls = useAnimation();
@@ -38,25 +39,34 @@ const Header = () => {
 
   const [isContentVisible, setIsContentVisible] = useState(false);
   const [isContentVisible2, setIsContentVisible2] = useState(false);
+  const [query, setQuery] = useState("");
 
+  const handleInputChange = (event) => {
+    setQuery(event.target.value);
+  };
+
+  const handleSearch = () => {
+    // alert("You searched for: " + query);
+    router.push(`/singleCategory?query=${encodeURIComponent(query)}`);
+
+    // You can add your search logic here
+  };
+  const categoryFind = (category) => () => {
+    router.push(`/categorySearch?category=${encodeURIComponent(category._id)}`);
+  };
   const handleToggle = () => {
     setIsContentVisible(!isContentVisible);
   };
+
   const handleToggle2 = () => {
     setIsContentVisible2(!isContentVisible2);
   };
-  const menuItems = [
-    "Anniversary",
-    "Birthday",
-    "Flowers",
-    "Cake",
-    "Personalised",
-    "Hamper",
-    "More Gift",
-    "Brands",
-    "Occasion",
-    "Global",
-  ];
+ const goToCart =()=>{
+  router.push(`/cart`)
+ }
+ const goToHome =()=>{
+  router.push(`/`)
+ }
   return (
     <>
       <div className={styles.topbaar}>
@@ -72,14 +82,39 @@ const Header = () => {
       </div>
       <div className={styles.header}>
         <div className={styles.logo}>
-          <img src="/Paradiselogo2.png" className={styles.logoimg} />
-        </div>
-        {/* <div></div> */}
-        <div className={styles.multitimes2}>
-          <div>
-            <FaCartShopping className={styles.icon} />
-            <text>Cart</text>
+          <div className={styles.logoDiv}
+          onClick={() => goToHome()}>
+            <img src="/Paradiselogo2.png" className={styles.logoimg} />
           </div>
+          <div className={styles.searchContainer2}>
+            <input
+              type="text"
+              id="searchInput"
+              className={styles.searchInput}
+              placeholder="Search flowers, cakes, gifts etc."
+              value={query}
+              onChange={handleInputChange}
+            />
+            <button className={styles.searchButton} onClick={handleSearch}>
+              <FaSearch className={styles.searchIcon} />
+            </button>
+          </div>
+        </div>
+        <div className={styles.searchContainer}>
+          <input
+            type="text"
+            id="searchInput"
+            className={styles.searchInput}
+            placeholder="Search flowers, cakes, gifts etc."
+            value={query}
+            onChange={handleInputChange}
+          />
+          <button className={styles.searchButton} onClick={handleSearch}>
+            <FaSearch className={styles.searchIcon} />
+          </button>
+        </div>
+        <div className={styles.multitimes2}>
+         
           <div>
             <IoMdHelpCircleOutline className={styles.icon} />
             <text>Help</text>
@@ -88,7 +123,7 @@ const Header = () => {
             <MdOutlineCorporateFare className={styles.icon} />
             <text>Corporate</text>
           </div>
-          <div>
+          <div onClick={()=>(goToCart())}>
             <FaCartShopping className={styles.icon} />
             <text>Cart</text>
           </div>
@@ -105,8 +140,6 @@ const Header = () => {
               <FaBars className={styles.icon} onClick={handleToggle} />
             )}
             <div className={styles.multitimes}>
-              {/* <FaTimes className={styles.icon} /> */}
-              {/* <IoIosCall className={styles.icon} /> */}
               <FaSearch className={styles.icon} />
               <MdCardGiftcard className={styles.icon} />
               <FaCartShopping className={styles.icon} />
@@ -161,53 +194,30 @@ const Header = () => {
               </div>
             </div>
             <div className={styles.drawer}>
-              {menuItems.map((item) => (
-                // <Link key={item} href={`/singleCategory?category=${item}`} passHref className={styles.Link}>
-                <Link
-                  key={item}
-                  href={`/singleCategory`}
-                  passHref
-                  className={styles.Link}
-                >
-                  <div className={styles.drawer}>
-                    {item}{" "}
+              {Categories.map((category) => (
+               
+                  <div className={styles.drawer}
+                  onClick={categoryFind(category)}>
+                    {category.name}
                     <span>
                       <RiArrowDropDownLine />
                     </span>
                   </div>
-                </Link>
               ))}
             </div>
           </div>
         )}
       </div>
       <div className={styles.headerbot}>
-        {/* {menuItems.map((item) => (
-        // <Link key={item} href={`/singleCategory?category=${item}`} passHref className={styles.Link}>
-        <Link key={item} href={`/singleCategory`} passHref className={styles.Link}>
-
-          <div>
-            {item}{" "}
-            <span>
-              <RiArrowDropDownLine />
-            </span>
-          </div>
-        </Link>
-      ))} */}
         {Categories.map((category) => (
-          <Link
-            key={category._id}
-            href={`/singleCategory`}
-            passHref
-            className={styles.Link}
-          >
-            <div>
+         
+            <div
+            onClick={categoryFind(category)}>
               {category.name}
               <span>
                 <RiArrowDropDownLine />
               </span>
             </div>
-          </Link>
         ))}
       </div>
     </>

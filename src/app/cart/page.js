@@ -1,74 +1,39 @@
 "use client";
 import styles from "./cart.module.css";
 import { FaTimes } from "react-icons/fa";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { current } from "@reduxjs/toolkit";
 
 const cart = () => {
-  const [products, setProducts] = useState([
-    {
-      name: "Pink Gypso Beauty Arrangement",
-      price: "AED 249",
-      imageUrl: "/flower1.jpg",
-      quantity: 2,
-      time: "07:00 - 09:00 Hrs",
-      date: "Tue, 23 Jul, 2024",
-      method: " Morning Delivery:AED 59",
-    },
-    {
-      name: "Mixed Floral Basket",
-      price: "AED 319",
-      imageUrl: "/floral-basket.jpg",
-      quantity: 3,
-      time: "07:00 - 09:00 Hrs",
-      date: "Tue, 23 Jul, 2024",
-      method: " Morning Delivery:AED 59",
-    },
-    {
-      name: "Pink Gypso Beauty Arrangement",
-      price: "AED 249",
-      imageUrl: "/flower1.jpg",
-      quantity: 1,
-      time: "07:00 - 09:00 Hrs",
-      date: "Tue, 23 Jul, 2024",
-      method: " Morning Delivery:AED 59",
-    },
-    {
-      name: "Mixed Floral Basket",
-      price: "AED 319",
-      imageUrl: "/floral-basket.jpg",
-      quantity: 5,
-      time: "07:00 - 09:00 Hrs",
-      date: "Tue, 23 Jul, 2024",
-      method: " Morning Delivery:AED 59",
-    },
-  ]);
+  const [Data, setData] = useState([]);
 
-  const handleIncrement = (index) => {
-    const newProducts = [...products];
-    newProducts[index].quantity += 1;
-    setProducts(newProducts);
-  };
+  useEffect(() => {
+    const currentCartItems =
+      JSON.parse(localStorage.getItem("cartItems")) || [];
+    console.log(currentCartItems, "hammad cart items");
+    setData(currentCartItems);
+  }, []);
 
-  const handleDecrement = (index) => {
-    const newProducts = [...products];
-    if (newProducts[index].quantity > 0) {
-      newProducts[index].quantity -= 1;
-      setProducts(newProducts);
-    }
-    const handleRemove = (index) => {
-      const newProducts = products.filter((_, i) => i !== index);
-      setProducts(newProducts);
-    };
+
+  const handleRemove = (index) => {
+    const newData = Data.filter((_, i) => i !== index);
+    setData(newData);
+    localStorage.setItem("cartItems", JSON.stringify(newData));
   };
   return (
     <>
       <div className={styles.CartMain}>
-        {products.map((product, index) => (
+        {Data.map((product, index) => (
           <div>
             <div className={styles.CartMain2} key={index}>
               <div className={styles.cartImage}>
                 <img src={product.imageUrl} alt={product.name} />
-                <div>Delete</div>
+                <div
+                  onClick={() => handleRemove(index)}
+                  className={styles.delete}
+                >
+                  Delete
+                </div>
               </div>
               <div>
                 <div>{product.name}</div>

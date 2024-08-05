@@ -7,14 +7,15 @@ const initialState = {
   productApiData: [],
   categoryApiData: [],
 };
-
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 export const productApi = createAsyncThunk("productApi", async () => {
-  const response = await fetch("http://localhost:8000/getProducts");
+  console.log(apiUrl, "env");
+  const response = await fetch(`${apiUrl}/getProducts`);
   const data = await response.json();
   return data.products; // Return products array directly
 });
 export const CategoryApi = createAsyncThunk("CategoryApi", async () => {
-  const response = await fetch("http://localhost:8000/getCategories");
+  const response = await fetch(`${apiUrl}/getCategories`);
   const data = await response.json();
   return data.categories; // Return products array directly
 });
@@ -24,22 +25,22 @@ const Slice = createSlice({
   reducers: {
     addToCart: (state, action) => {
       console.log(action.payload, "hammad");
-      const data = {
-        // Id: nanoid(),
-        name: action.payload.name,
-        price: action.payload.price,
-        imageUrl: action.payload.imageUrl,
-        imageUrl1: action.payload.imageUrl1,
-        imageUrl2: action.payload.imageUrl2,
-        city: action.payload.city,
-        date: action.payload.date,
-        time: action.payload.time,
-        method: action.payload.method,
-        message: action.payload.message,
-      };
+      // const data = {
+      //   // Id: nanoid(),
+      //   name: action.payload.name,
+      //   price: action.payload.price,
+      //   imageUrl: action.payload.imageUrl,
+      //   imageUrl1: action.payload.imageUrl1,
+      //   imageUrl2: action.payload.imageUrl2,
+      //   city: action.payload.city,
+      //   date: action.payload.date,
+      //   time: action.payload.time,
+      //   method: action.payload.method,
+      //   message: action.payload.message,
+      // };
 
-      state.cart.push(data);
-      console.log(state.cart[0], "hammadcart");
+      state.cart.push(action.payload);
+      console.log(state.cart[2], "hammadcart");
     },
   },
   extraReducers: (builder) => {

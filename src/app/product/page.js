@@ -14,7 +14,10 @@ import { format } from "date-fns";
 import ReactImageMagnify from "react-image-magnify";
 import { productApi } from "@/reduxToolKit/slice";
 import { useRouter, useSearchParams } from "next/navigation";
+
 const Product = () => {
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
   useEffect(() => {
     window.scrollTo(0, 0); // Scroll to the top
   }, []);
@@ -66,7 +69,7 @@ const Product = () => {
     const fetchProduct = async () => {
       if (ID) {
         try {
-          const response = await fetch("http://localhost:8000/getProductById", {
+          const response = await fetch(`${apiUrl}/getProductById`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -122,9 +125,25 @@ const Product = () => {
       method: selectedOption,
       message: message,
     };
-    console.log(cartItems);
-    dispatch(addToCart(cartItems));
+
+    // Retrieve the current cart items from local storage
+    let currentCartItems = JSON.parse(localStorage.getItem("cartItems"));
+
+    // Ensure currentCartItems is an array
+    if (!Array.isArray(currentCartItems)) {
+      currentCartItems = [];
+    }
+
+    // Add the new cart item to the array
+    currentCartItems.push(cartItems);
+
+    // Update local storage with the new array of cart items
+    localStorage.setItem("cartItems", JSON.stringify(currentCartItems));
+
+    console.log(cartItems, "items");
+    // dispatch(addToCart(cartItems));
   };
+
   const handleImageClick = (newImage) => {
     setMainImage(newImage);
   };
@@ -176,7 +195,11 @@ const Product = () => {
     CartDispatch();
     router.push("/");
   };
-
+  const handleProceed = (e) => {
+    e.preventDefault();
+    CartDispatch();
+    router.push("/cart");
+  };
   return (
     <>
       <div className={styles.main}>
@@ -321,16 +344,21 @@ const Product = () => {
               >
                 Add to cart
               </div>
-              <Link
+              {/* <Link
                 className={`${styles.link} ${
                   isDisabled ? styles.disabled : ""
                 }`}
                 href={isDisabled ? "#" : "/cart"}
                 scroll={false}
                 style={isDisabled ? { pointerEvents: "none" } : {}}
+              > */}
+              <div
+                className={styles.buy}
+                onClick={isDisabled ? null : handleProceed}
               >
-                <div className={styles.buy}>Buy Now</div>
-              </Link>
+                Buy Now
+              </div>
+              {/* </Link> */}
             </div>
           </form>
           <div className="description">
